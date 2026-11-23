@@ -1,0 +1,22 @@
+# Copy to wrangler.toml and fill in. wrangler.toml is kept out of git.
+name = "my-campaign"
+pages_build_output_dir = "site"
+compatibility_date = "2026-11-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "campaign-corrections"
+database_id = "from `npx wrangler d1 create campaign-corrections`"
+
+[vars]
+SITE_NAME = "My Campaign"
+SITE_URL = "https://wiki.example.com"
+MAIL_FROM = "wiki@example.com"
+TEAM_DOMAIN = "your-team.cloudflareaccess.com"
+# Application Audience tags of the Access apps in front of the site (custom domain, pages.dev), comma-separated.
+POLICY_AUD = "aud-tag-1,aud-tag-2"
+
+# Emails the owner about access requests and corrections (wiki/mailer).
+[[services]]
+binding = "MAILER"
+service = "wiki-mailer"

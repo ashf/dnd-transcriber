@@ -1,0 +1,26 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+.DS_Store
+.pytest_cache/
+*.tmp
+
+# Campaign content: never commit it
+wiki/docs/
+wiki/site/
+wiki/mkdocs.yml
+wiki/.wrangler/
+
+# Deployment settings: copy the .example.toml files
+wiki/wrangler.toml
+wiki/mailer/wrangler.toml
+
+# Wrangler caches (hold account details)
+**/.wrangler/

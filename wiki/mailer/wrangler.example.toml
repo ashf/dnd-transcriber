@@ -1,0 +1,15 @@
+# Copy to wrangler.toml and fill in. wrangler.toml is kept out of git.
+name = "wiki-mailer"
+main = "worker.js"
+compatibility_date = "2026-11-01"
+# No public URL: only the wiki reaches this Worker, through its service binding.
+workers_dev = false
+
+# Sends only to addresses verified in Email Routing. The recipient is the NOTIFY_TO secret
+# (`npx wrangler secret put NOTIFY_TO`), so the address stays out of the repo.
+[[send_email]]
+name = "EMAIL"
+
+[vars]
+NOTIFY_FROM = "wiki@example.com"
+SITE_NAME = "My Campaign"

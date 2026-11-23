@@ -1,0 +1,37 @@
+{
+  "campaign": "Name of the published adventure, if any (used only to know what not to spoil)",
+  "dm": "Pat",
+  "characters": [
+    {
+      "name": "Aria Vale",
+      "player": "Jordan",
+      "nicknames": [
+        "Aria"
+      ],
+      "subtitle": "Half-Elf Bard 3",
+      "source_files": {
+        "portrait": "aria portrait.png"
+      },
+      "appearance": {
+        "hair": "Short silver hair",
+        "outfit": "Green travelling cloak, lute on her back"
+      }
+    },
+    {
+      "name": "Brunn Ironhollow",
+      "player": "Alex",
+      "nicknames": [
+        "Brunn",
+        "Red"
+      ],
+      "subtitle": "Dwarf Fighter 3",
+      "source_files": {
+        "portrait": "brunn portrait.png"
+      },
+      "appearance": {
+        "hair": "Red braided beard",
+        "outfit": "Dented plate armor, a hammer named Gerald"
+      }
+    }
+  ]
+}

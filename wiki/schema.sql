@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS corrections (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  page TEXT NOT NULL,
+  text TEXT NOT NULL,
+  email TEXT NOT NULL,
+  created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS members (
+  email TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  added_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS access_requests (
+  email TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  note TEXT NOT NULL,
+  requested_at TEXT NOT NULL
+);

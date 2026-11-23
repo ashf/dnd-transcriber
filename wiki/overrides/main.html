@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {{ super() }}
+  <form id="correction" style="margin-top:3rem;padding-top:1rem;border-top:1px solid var(--md-default-fg-color--lightest)">
+    <label for="correction-text"><strong>Something wrong on this page?</strong> Tell us what it should say.</label>
+    <textarea id="correction-text" name="text" rows="4" maxlength="5000" required
+      style="display:block;width:100%;margin:.5rem 0;padding:.5rem;font:inherit;color:inherit;background:var(--md-code-bg-color);border:1px solid var(--md-default-fg-color--lighter)"></textarea>
+    <button type="submit" class="md-button md-button--primary">Send correction</button>
+    <span id="correction-status" role="status" style="margin-left:1rem"></span>
+  </form>
+  <script>
+    document.getElementById("correction").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const box = document.getElementById("correction-text");
+      const status = document.getElementById("correction-status");
+      status.textContent = "Sending...";
+      try {
+        const response = await fetch("/api/corrections", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ page: location.pathname, text: box.value }),
+        });
+        status.textContent = response.ok ? "Thanks, saved." : "Could not save it (" + response.status + ").";
+        if (response.ok) box.value = "";
+      } catch {
+        status.textContent = "Could not reach the site. Try again.";
+      }
+    });
+  </script>
+{% endblock %}
