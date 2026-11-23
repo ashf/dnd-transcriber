@@ -54,6 +54,7 @@ My Campaign/
   characters.json          the player characters
   session-outputs.md       what to write for each session
   characters.md            the character overview (written by the cleanup)
+  world.md                 NPCs, places, items and mysteries (written by the cleanup)
   corrections.md           corrections from the wiki (written by pull_corrections.py)
   aria portrait.png      portraits and other supplemental files
   Session 1/

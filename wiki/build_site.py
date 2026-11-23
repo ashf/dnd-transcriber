@@ -2,7 +2,7 @@
 
     uv run --group wiki python wiki/build_site.py "My Campaign" --characters "My Campaign/characters.json" --title "My Campaign"
 
-Reads the campaign's characters overview (characters.md) and every session folder ("Session 1/") with its
+Reads the campaign's characters overview (characters.md), its world notes (world.md) and every session folder ("Session 1/") with its
 "<session> - <output>.md" files and its images (in the session folder or its images/ folder), and builds the
 site into wiki/site. The Characters page shows each character's portrait from the characters file. On an image
 prompts page, an image whose file name starts with a scene's title or number ("The Armor Awakens.jpeg",
@@ -110,7 +110,7 @@ def page_path(session: str, output: str) -> str:
     return f"sessions/{slug(session)}/{slug(output)}.md"
 
 
-def mkdocs_config(title: str, sessions: dict[str, dict[str, Path]], has_characters: bool) -> str:
+def mkdocs_config(title: str, sessions: dict[str, dict[str, Path]], has_characters: bool, has_world: bool = False) -> str:
     lines = [
         f"site_name: {title!r}",
         "theme:",
@@ -132,6 +132,8 @@ def mkdocs_config(title: str, sessions: dict[str, dict[str, Path]], has_characte
     ]
     if has_characters:
         lines.append("  - Characters: characters.md")
+    if has_world:
+        lines.append("  - World: world.md")
     lines.append("  - Sessions:")
     for session, outputs in reversed(sessions.items()):
         lines.append(f"    - {session!r}:")
@@ -180,8 +182,12 @@ def build(campaign: Path, characters_file: Path, title: str, wiki: Path = WIKI) 
                 portrait_urls[c["name"]] = f"assets/portraits/{target.name}"
         (docs / "characters.md").write_text(tidy_markdown(with_portraits(overview.read_text(), characters, portrait_urls)))
 
+    world = campaign / "world.md"
+    if world.exists():
+        (docs / "world.md").write_text(tidy_markdown(world.read_text()))
+
     (docs / "index.md").write_text(home_page(title, sessions))
-    (wiki / "mkdocs.yml").write_text(mkdocs_config(title, sessions, overview.exists()))
+    (wiki / "mkdocs.yml").write_text(mkdocs_config(title, sessions, overview.exists(), world.exists()))
     subprocess.run(["mkdocs", "build", "--clean", "--quiet"], cwd=wiki, check=True)
 
 

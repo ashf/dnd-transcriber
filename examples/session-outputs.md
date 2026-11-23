@@ -4,6 +4,24 @@ Write one file per item under "Session outputs" for every session, in the sessio
 
 In the character files (character developments and `characters.md`), each character is a `## ` section. Inside it, a field with a short value stays on one line (`**Player:** Jordan`); every other field gets a `### ` subheading (`### What he did`, `### Relationships`) with its content below as a paragraph or a bullet list, never as one long bullet.
 
+# Context
+
+Each stage reads exactly these earlier files, and nothing else from earlier sessions.
+
+**Stage A** (cleaning a window):
+- the characters file, `characters.md` and `world.md`
+- `corrections.md`, if it exists
+- the previous session's summary, character developments and laughs
+- the previous cleaned window of this session (none for window 1)
+
+**Stage B** (writing the session outputs):
+- this session's joined transcript
+- the characters file, `characters.md` and `world.md` (both are updated by this stage)
+- `corrections.md`, if it exists
+- the previous session's summary, character developments and laughs
+
+Never read earlier sessions' transcripts or raw transcripts, any `work/` folder other than this session's, image prompts, images or portraits.
+
 # Session outputs
 
 ## transcript
@@ -27,3 +45,6 @@ Five prompts for an image generator, each from a separate pivotal scene of this 
 
 ## characters.md
 An overview of every player character as they stand now, one `## <short name>` section per character in the order of the characters file (for example `## Aria`). It is not tied to a session: no session headings and no timestamps. For each character: player, who they are, appearance, personality, relationships with the others, items they carry, running jokes, and open threads. Start from the current file when it exists and fold in this session's character developments; otherwise build it from the characters file and this session. Only facts shown at the table; nothing from source material.
+
+## world.md
+The campaign's world as the party knows it now, with no session headings and no timestamps. Sections: `## NPCs`, `## Places`, `## Items and artifacts` (notable things in the world, not the characters' inventories, which live in `characters.md`), `## Factions and organizations`, and `## Open mysteries`. Each entry is a `### <name as the party knows it>` subheading followed by a short paragraph: who or what it is, how the party met or found it, how it stands with the party, and the session it first appeared in (`First appeared: Session 2`). Spellings follow the transcripts, `[sp?]` marks included. Start from the current file when it exists and fold in this session; otherwise build it from this session. Only what the party learned at the table; nothing from source material.

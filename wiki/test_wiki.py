@@ -101,6 +101,12 @@ def test_mkdocs_config_lists_newest_session_first():
 
     assert result.index("'Session 2'") < result.index("'Session 1'")
     assert "  - Characters: characters.md" in result
+
+
+def test_mkdocs_config_adds_the_world_page_when_there_is_one():
+    result = b.mkdocs_config("Camp", {"Session 1": {"summary": Path("a")}}, has_characters=True, has_world=True)
+
+    assert "  - Characters: characters.md\n  - World: world.md\n" in result
     assert "      - 'Transcript': 'sessions/session-2/transcript.md'" in result
 
 
