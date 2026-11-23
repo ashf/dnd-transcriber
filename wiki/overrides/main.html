@@ -1,5 +1,16 @@
 {% extends "base.html" %}
 
+{% block extrahead %}
+  {{ super() }}
+  <style>
+    .md-typeset .nested {
+      margin-left: 1.25rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--md-default-fg-color--lightest);
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
   {{ super() }}
   <form id="correction" style="margin-top:3rem;padding-top:1rem;border-top:1px solid var(--md-default-fg-color--lightest)">
