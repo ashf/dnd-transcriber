@@ -6,6 +6,8 @@ In the character files (character developments and `characters.md`), each charac
 
 # Context
 
+**Reference** for the spelling check (optional; see the cleanup prompt's No spoilers section): a URL or file for the published adventure, used only to correct the spelling of names, places, items and terms said at the table.
+
 Each stage reads exactly these earlier files, and nothing else from earlier sessions.
 
 **Stage A** (cleaning a window):

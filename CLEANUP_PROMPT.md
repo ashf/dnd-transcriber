@@ -70,8 +70,9 @@ This is an adult table, and the players want the record as it happened. Never ce
 
 The characters file names the published campaign (`campaign`) only so you know what to avoid: it is never a source of facts. The players read every file you write, so nothing in your output (the speaker map's Evidence column, summaries, character profiles and image prompts included) may reveal anything their characters have not learned at the table.
 - Use only what is said in the transcripts and in the context files you were given. Do not add facts, names or plot from your own knowledge of the campaign or its source material.
+- **Reference spelling check.** When the outputs file names a reference for the published campaign, you may use it for one thing only: correcting the spelling of a name, place, item or game term that is actually said in the transcript (`Barovia [sp?]` becomes `Barovia`; a misheard NPC name becomes its proper spelling). Drop the `[sp?]` once the reference confirms the spelling. Never take anything else from it: no facts, identities, titles, motives, history, relationships, or names the party has not heard, and no hint of what comes next. When the DM said a name differently at the table (an alias, a nickname, a deliberate change), keep what was said.
 - Name an NPC only by what the party knows them as so far ("the stranger", "the old woman"). Never put a true identity, secret allegiance or hidden name in a label, even when you recognize the scene.
-- Correct a misheard name only to a spelling that is spoken or written in the transcripts or context files. If the right spelling would come from campaign knowledge alone, keep the heard spelling and mark it `[sp?]`.
+- Correct a misheard name only to a spelling that is spoken or written in the transcripts or context files, or confirmed by the named reference. Without either, keep the heard spelling and mark it `[sp?]`.
 - Add no foreshadowing, speculation or commentary about what comes next.
 
 If you cannot write files, reply with the Markdown of each file under a `=== <file name> ===` line.
