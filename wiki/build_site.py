@@ -2,7 +2,8 @@
 
     uv run --group wiki python wiki/build_site.py "My Campaign" --characters "My Campaign/characters.json" --title "My Campaign"
 
-Reads the campaign's characters overview (characters.md), its world notes (world.md) and every session folder ("Session 1/") with its
+Reads the campaign's characters overview (characters.md), its world notes (world.md) with pictures from its world/
+folder (each named after the entry it shows, like "the_larder_creature.webp"), and every session folder ("Session 1/") with its
 "<session> - <output>.md" files and its images (in the session folder or its images/ folder), and builds the
 site into wiki/site. The Characters page shows each character's portrait from the characters file. On an image
 prompts page, an image whose file name starts with a scene's title or number ("The Armor Awakens.jpeg",
@@ -106,6 +107,23 @@ def with_portraits(page: str, characters: dict, portrait_urls: dict[str, str]) -
     return "\n".join(lines) + "\n"
 
 
+def entry_key(text: str) -> str:
+    """Compare an image file name with a heading: lowercase, words only, no '[sp?]' and no leading 'the'."""
+    words = re.sub(r"[^a-z0-9]+", " ", text.lower().replace("[sp?]", "")).split()
+    return " ".join(words[1:] if words[:1] == ["the"] else words)
+
+
+def with_entry_images(page: str, image_urls: dict[str, str]) -> str:
+    """Put each image under the heading its file name matches, floated beside the entry's text."""
+    lines = []
+    for line in page.splitlines():
+        lines.append(line)
+        m = re.match(r"^#{2,6} (.+)$", line)
+        if m and (url := image_urls.pop(entry_key(m[1]), None)):
+            lines += ["", f"![{m[1]}]({url}){{ align=right width=\"260\" }}", ""]
+    return "\n".join(lines) + "\n"
+
+
 def page_path(session: str, output: str) -> str:
     return f"sessions/{slug(session)}/{slug(output)}.md"
 
@@ -184,7 +202,16 @@ def build(campaign: Path, characters_file: Path, title: str, wiki: Path = WIKI) 
 
     world = campaign / "world.md"
     if world.exists():
-        (docs / "world.md").write_text(tidy_markdown(world.read_text()))
+        image_urls = {}
+        for picture in images(campaign / "world"):
+            target = docs / "assets" / "world" / picture.name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(picture, target)
+            image_urls[entry_key(picture.stem)] = quote(f"assets/world/{picture.name}")
+        page = with_entry_images(world.read_text(), image_urls)
+        for leftover in image_urls:
+            print(f"No world entry matches the image {leftover!r}", file=sys.stderr)
+        (docs / "world.md").write_text(tidy_markdown(page))
 
     (docs / "index.md").write_text(home_page(title, sessions))
     (wiki / "mkdocs.yml").write_text(mkdocs_config(title, sessions, overview.exists(), world.exists()))

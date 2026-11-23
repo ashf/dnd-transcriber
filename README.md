@@ -57,6 +57,7 @@ My Campaign/
   world.md                 NPCs, places, items and mysteries (written by the cleanup)
   corrections.md           corrections from the wiki (written by pull_corrections.py)
   aria portrait.png      portraits and other supplemental files
+  world/                 pictures for World entries, each named after its entry (garrick.jpeg)
   Session 1/
     Session 1 (part 1).m4a
     Session 1 (part 2).m4a

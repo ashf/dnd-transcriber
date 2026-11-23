@@ -127,3 +127,16 @@ def test_corrections_markdown_groups_rows_by_page():
         "## /characters/\n\n"
         "- 2026-11-25, c@x.com: Red is Brunn.\n"
     )
+
+
+def test_with_entry_images_matches_file_names_to_headings_loosely():
+    page = "## NPCs\n\n### Rolf\nTaskmaster.\n\n### The woman in the mirror\nA ghost.\n\n### Rose (Rosavalda Durst [sp?])\nA child.\n"
+    urls = {b.entry_key("rolf"): "assets/world/rolf.jpeg", b.entry_key("woman_in_the_mirror"): "assets/world/w.jpeg"}
+
+    result = b.with_entry_images(page, urls)
+
+    assert result == (
+        "## NPCs\n\n### Rolf\n\n![Rolf](assets/world/rolf.jpeg){ align=right width=\"260\" }\n\nTaskmaster.\n\n"
+        "### The woman in the mirror\n\n![The woman in the mirror](assets/world/w.jpeg){ align=right width=\"260\" }\n\n"
+        "A ghost.\n\n### Rose (Rosavalda Durst [sp?])\nA child.\n"
+    )
