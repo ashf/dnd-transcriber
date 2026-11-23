@@ -3,6 +3,10 @@
 {% block extrahead %}
   {{ super() }}
   <style>
+    /* A floated portrait or picture belongs to its own entry: each heading starts below it. */
+    .md-typeset h2, .md-typeset h3, .md-typeset h4, .md-typeset h5 {
+      clear: both;
+    }
     .md-typeset .nested {
       margin-left: 1.25rem;
       padding-left: 1rem;
