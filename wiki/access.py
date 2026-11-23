@@ -138,6 +138,9 @@ def main(argv: list[str] | None = None) -> None:
             print(f"{r['name']}  {r['email']}  since {r['added_at'][:10]}")
     elif args.command == "approve":
         email = checked_email(args.email)
+        if run(f"SELECT 1 FROM members WHERE email = {sql_text(email)}"):
+            print(f"{email} is already a member; nothing changed (use `welcome` to resend the email)", file=sys.stderr)
+            return
         run(approve_sql(email))
         print(f"Approved {email}", file=sys.stderr)
         if not args.quiet:

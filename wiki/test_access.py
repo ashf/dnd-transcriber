@@ -31,21 +31,31 @@ def test_checked_email_rejects_values_unsafe_for_sql(value):
 
 def test_approve_saves_the_member_before_emailing_them(monkeypatch):
     calls = []
-    monkeypatch.setattr(a, "run", lambda sql: calls.append(("sql", sql)) or [{"name": "Alex"}])
+    monkeypatch.setattr(a, "run", lambda sql: calls.append(("sql", sql)) or ([] if sql.startswith("SELECT 1") else [{"name": "Alex"}]))
     monkeypatch.setattr(a, "resend_key", lambda: "re_test")
     monkeypatch.setattr(a, "site_settings", lambda: SITE)
     monkeypatch.setattr(urllib.request, "urlopen", lambda req, timeout: calls.append(("email", json.loads(req.data))))
 
     a.main(["approve", "c@example.com"])
 
-    assert [kind for kind, _ in calls] == ["sql", "sql", "email"]
-    assert calls[0][1].startswith("INSERT INTO members")
-    assert calls[2][1]["to"] == ["c@example.com"]
+    assert [kind for kind, _ in calls] == ["sql", "sql", "sql", "email"]
+    assert calls[1][1].startswith("INSERT INTO members")
+    assert calls[3][1]["to"] == ["c@example.com"]
+
+
+def test_approving_an_existing_member_changes_nothing(monkeypatch):
+    calls = []
+    monkeypatch.setattr(a, "run", lambda sql: calls.append(sql) or [{"1": 1}])
+    monkeypatch.setattr(urllib.request, "urlopen", lambda *x, **k: calls.append("email"))
+
+    a.main(["approve", "c@example.com"])
+
+    assert calls == ["SELECT 1 FROM members WHERE email = 'c@example.com'"]
 
 
 def test_approve_quiet_sends_no_email(monkeypatch):
     sent = []
-    monkeypatch.setattr(a, "run", lambda sql: [{"name": "Alex"}])
+    monkeypatch.setattr(a, "run", lambda sql: [] if sql.startswith("SELECT 1") else [{"name": "Alex"}])
     monkeypatch.setattr(urllib.request, "urlopen", lambda *x, **k: sent.append(1))
 
     a.main(["approve", "c@example.com", "--quiet"])
